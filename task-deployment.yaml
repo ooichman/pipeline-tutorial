@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: iperf-deployment
+spec:
+  resources:
+    inputs:
+      - {type: git, name: source}
+    outputs:
+      - {type: image , name: image}
+  steps:
+    - name: deploying-iperf-server
+      image: quay.io/openshift-pipeline/openshift-cli:latest
+      workingDir: /workspace/source/iperf-server/
+      script: |
+        #!/usr/bin/env bash
+        sed -i 's/namespace:\ iperf/namespace:\ iperfcon/' pod-deployment-antiaffinity.yaml
+        oc create -f pod-deployment-antiaffinity.yaml

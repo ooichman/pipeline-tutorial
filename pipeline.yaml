@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-iperf-server
+spec:
+  resources:
+  - name: source
+    type: git
+  - name: image
+    type: image
+  tasks:
+  - name: hello-world
+    taskRef:
+      name: echo-hello-world
+  - name: build-image
+    taskRef:
+      name: iperf-server-task
+    resources:
+      inputs:
+      - name: source
+        resource: source
+      outputs:
+      - name: image
+        resource: image
+  - name: deploying-iperf-server
+    taskRef:
+      name: iperf-deployment

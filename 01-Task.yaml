@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: iperf-server-task
+spec:
+  resources:
+    inputs:
+      - {type: git, name: source}
+    outputs:
+      - {type: image , name: image}
+  params:
+    - name: iperf-server
+      description: The directory in source that contains the iperf-server source files
+      type: string
+      default: "k8s"
+  steps:
+    - name: build
+      image: quay.io/buildah/stable:v1.11.0
+      workingDir: /workspace/source/iperf-server/
+      securityContext:
+        privileged: true
+      command: ["/bin/bash", "-c"]
+      args:
+        - |-
+          buildah bud -f Dockerfile -t image-registry.openshift-image-registry.svc:5000/iperfcon/iperf-server:latest .

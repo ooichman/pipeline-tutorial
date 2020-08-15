@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1alpha1
+kind: TaskRun
+metadata:
+  name: iperf-server-build
+spec:
+  taskRef:
+    name: iperf-server-task
+  inputs:
+    resources:
+      - name: source
+        resourceRef:
+          name: iperf-git
+  outputs:
+    resources:
+      - name: image
+        resourceRef:
+          name: iperf-server

@@ -1,0 +1,19 @@
+# the Commands for the Tutorial:
+
+oc new-project pipelines-tutorial
+
+oc get serviceaccount pipeline
+
+tkn pipeline ls
+
+tkn resource ls
+
+t
+
+tkn pipeline list
+
+tkn pipelinerun ls
+
+tkn pipeline logs -f
+
+tkn pipelinerun list

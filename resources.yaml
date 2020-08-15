@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: iperf-git
+spec:
+  type: git
+  params:
+  - name: url
+    value: https://github.com/ooichman/iperfcon.git
+---
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: iperf-server
+spec:
+  type: image
+  params:
+  - name: url
+    value: image-registry.openshift-image-registry.svc:5000/iperfcon/iperf-server:latest
